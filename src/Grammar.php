@@ -2,6 +2,8 @@
 
 namespace CrCms\ElasticSearch;
 
+use Illuminate\Support\Arr;
+
 /**
  * Class Grammar.
  *
@@ -16,12 +18,12 @@ class Grammar
         '_source' => 'columns',
         'query'   => 'wheres',
         'aggs',
-        'sort'   => 'orders',
-        'size'   => 'limit',
-        'from'   => 'offset',
-        'index'  => 'index',
-        'type'   => 'type',
-        'scroll' => 'scroll',
+        'sort'    => 'orders',
+        'size'    => 'limit',
+        'from'    => 'offset',
+        'index'   => 'index',
+        'type'    => 'type',
+        'scroll'  => 'scroll',
     ];
 
     /**
@@ -62,9 +64,9 @@ class Grammar
     public function compileSelect(Builder $builder)
     {
         $body = $this->compileComponents($builder);
-        $index = array_pull($body, 'index');
-        $type = array_pull($body, 'type');
-        $scroll = array_pull($body, 'scroll');
+        $index = Arr::pull($body, 'index');
+        $type = Arr::pull($body, 'type');
+        $scroll = Arr::pull($body, 'scroll');
         $params = ['body' => $body, 'index' => $index, 'type' => $type];
         if ($scroll) {
             $params['scroll'] = $scroll;
@@ -129,7 +131,7 @@ class Grammar
             if (is_array($aggItem)) {
                 $aggs[] = $aggItem;
             } else {
-                $aggs[$field.'_'.$aggItem] = [$aggItem => ['field' => $field]];
+                $aggs[$field . '_' . $aggItem] = [$aggItem => ['field' => $field]];
             }
         }
 
@@ -216,8 +218,8 @@ class Grammar
     }
 
     /**
-     * @param string      $leaf
-     * @param string      $column
+     * @param string $leaf
+     * @param string $column
      * @param string|null $operator
      * @param $value
      *
@@ -242,7 +244,7 @@ class Grammar
     protected function wherePriorityGroup(array $wheres): array
     {
         //get "or" index from array
-        $orIndex = (array) array_keys(array_map(function ($where) {
+        $orIndex = (array)array_keys(array_map(function ($where) {
             return $where['boolean'];
         }, $wheres), 'or');
 
@@ -270,7 +272,7 @@ class Grammar
 
         foreach ($this->selectComponents as $key => $component) {
             if (!empty($query->$component)) {
-                $method = 'compile'.ucfirst($component);
+                $method = 'compile' . ucfirst($component);
 
                 $body[is_numeric($key) ? $component : $key] = $this->$method($query, $query->$component);
             }

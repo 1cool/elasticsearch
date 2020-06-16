@@ -320,8 +320,8 @@ class Builder
 
     /**
      * @param $field
-     * @param null   $operator
-     * @param null   $value
+     * @param null $operator
+     * @param null $value
      * @param string $boolean
      *
      * @return Builder
@@ -345,7 +345,7 @@ class Builder
 
     /**
      * @param $field
-     * @param array  $values
+     * @param array $values
      * @param string $boolean
      *
      * @return Builder
@@ -368,8 +368,8 @@ class Builder
 
     /**
      * @param $column
-     * @param null   $operator
-     * @param null   $value
+     * @param null $operator
+     * @param null $value
      * @param string $leaf
      * @param string $boolean
      *
@@ -418,8 +418,8 @@ class Builder
 
     /**
      * @param $field
-     * @param null   $operator
-     * @param null   $value
+     * @param null $operator
+     * @param null $value
      * @param string $leaf
      *
      * @return Builder
@@ -499,7 +499,7 @@ class Builder
         $results = $this->runQuery($this->grammar->compileSelect($this));
 
         $data = collect($results['hits']['hits'])->map(function ($hit) {
-            return (object) array_merge($hit['_source'], ['_id' => $hit['_id']]);
+            return (object)array_merge($hit['_source'], ['_id' => $hit['_id']]);
         });
 
         $maxPage = intval(ceil($results['hits']['total'] / $perPage));
@@ -510,10 +510,10 @@ class Builder
             'current_page' => $page,
             'next_page'    => $page < $maxPage ? $page + 1 : $maxPage,
             //'last_page' => $maxPage,
-            'total_pages' => $maxPage,
-            'from'        => $from,
-            'to'          => $from + $perPage,
-            'data'        => $data,
+            'total_pages'  => $maxPage,
+            'from'         => $from,
+            'to'           => $from + $perPage,
+            'data'         => $data,
         ]);
     }
 
@@ -553,8 +553,8 @@ class Builder
 
     /**
      * @param callable $callback
-     * @param int      $limit
-     * @param string   $scroll
+     * @param int $limit
+     * @param string $scroll
      *
      * @return bool
      */
@@ -589,15 +589,15 @@ class Builder
     }
 
     /**
-     * @param array  $data
-     * @param null   $id
+     * @param array $data
+     * @param null $id
      * @param string $key
      *
      * @return stdClass
      */
     public function create(array $data, $id = null, $key = 'id'): stdClass
     {
-        $id = $id ? $id : isset($data[$key]) ? $data[$key] : uniqid();
+        $id = ($id ? $id : isset($data[$key])) ? $data[$key] : uniqid();
 
         $result = $this->runQuery(
             $this->grammar->compileCreate($this, $id, $data),
@@ -605,12 +605,12 @@ class Builder
         );
 
         if (!isset($result['result']) || $result['result'] !== 'created') {
-            throw new RunTimeException('Create params: '.json_encode($this->getLastQueryLog()));
+            throw new RunTimeException('Create params: ' . json_encode($this->getLastQueryLog()));
         }
 
         $data['_id'] = $id;
 
-        return (object) $data;
+        return (object)$data;
     }
 
     /**
@@ -624,7 +624,7 @@ class Builder
         $result = $this->runQuery($this->grammar->compileUpdate($this, $id, $data), 'update');
 
         if (!isset($result['result']) || $result['result'] !== 'updated') {
-            throw new RunTimeException('Update error params: '.json_encode($this->getLastQueryLog()));
+            throw new RunTimeException('Update error params: ' . json_encode($this->getLastQueryLog()));
         }
 
         return true;
@@ -640,7 +640,7 @@ class Builder
         $result = $this->runQuery($this->grammar->compileDelete($this, $id), 'delete');
 
         if (!isset($result['result']) || $result['result'] !== 'deleted') {
-            throw new RunTimeException('Delete error params:'.json_encode($this->getLastQueryLog()));
+            throw new RunTimeException('Delete error params:' . json_encode($this->getLastQueryLog()));
         }
 
         return true;
@@ -741,7 +741,7 @@ class Builder
     }
 
     /**
-     * @param array  $params
+     * @param array $params
      * @param string $method
      *
      * @return mixed
@@ -774,7 +774,7 @@ class Builder
      */
     protected function sourceToObject(array $result): stdClass
     {
-        return (object) array_merge($result['_source'], ['_id' => $result['_id']]);
+        return (object)array_merge($result['_source'], ['_id' => $result['_id']]);
     }
 
     /**

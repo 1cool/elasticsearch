@@ -1,5 +1,5 @@
 {
-  "name": "crcms/elasticsearch",
+  "name": "cool/elasticsearch",
   "description": "Use SQL statements to query elasticsearch",
   "keywords": [
     "elasticsearch",
@@ -8,7 +8,7 @@
     "orm",
     "php"
   ],
-  "homepage": "https://github.com/crcms/elasticsearch",
+  "homepage": "https://github.com/1cool/elasticsearch",
   "license": "MIT",
   "authors": [
     {
@@ -18,15 +18,15 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
-    "illuminate/support": "^5.3|^6.0",
+    "php": ">=7.2",
+    "illuminate/support": "^6.0",
     "elasticsearch/elasticsearch": "~6.0"
   },
   "autoload": {
     "files": [
     ],
     "psr-4": {
-      "CrCms\\ElasticSearch\\": "src/"
+      "Cool\\ElasticSearch\\": "src/"
     }
   },
   "extra": {
