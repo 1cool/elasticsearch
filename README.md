@@ -17,7 +17,7 @@
 You can install the package via composer:
 
 ```
-composer require 1cool/elasticsearch 1
+composer require 1cool/elasticsearch
 ```
 
 ## Laravel
