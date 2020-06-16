@@ -17,19 +17,10 @@
 You can install the package via composer:
 
 ```
-composer require crcms/elasticsearch
+composer require 1cool/elasticsearch
 ```
 
 ## Laravel
-
-Modify ``config / app.php``
-
-```
-'providers' => [
-    CrCms\ElasticSearch\LaravelServiceProvider::class,
-]
-
-```
 
 If you'd like to make configuration changes in the configuration file you can pubish it with the following Aritsan command:
 ```
