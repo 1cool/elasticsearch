@@ -26,7 +26,7 @@
     "files": [
     ],
     "psr-4": {
-      "Cool\\ElasticSearch\\": "src/"
+      "CrCms\\ElasticSearch\\": "src/"
     }
   },
   "extra": {
